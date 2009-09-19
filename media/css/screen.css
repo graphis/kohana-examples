@@ -80,7 +80,6 @@ a:visited { color: #1e9be4; text-decoration: underline; }
 .h-20 { height: 20px; }
 
 .w-100p { width: 100%; }
-.w-500 { width: 500px; }
 .w-600 { width: 600px; }
 
 /* PADDINGS AND MARGINS */
@@ -99,7 +98,7 @@ div.clear { content: ""; display: block; height: 0; clear: both; visibility: hid
 #header .links a       { color: #fff; text-decoration: underline; }
 #header .links a:hover { text-decoration: none; }
 
-#content-header                   { margin: 0 auto; height: 50px; width: 960px; }
+#content-header                   { margin: 0 auto; height: 50px; padding-top: 15px; width: 960px; }
 #content-header .title            { float: left; text-align: left; width: 944px; }
 #content-header .loading          { float: left; text-align: right; width: 16px; }
 #content-header .loading #loading { background: url('/ko3/media/img/ajax-loader.gif') 0px 8px no-repeat; display: none; height: 24px; width: 16px; }

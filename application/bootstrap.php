@@ -18,6 +18,12 @@ date_default_timezone_set('UTC');
  */
 spl_autoload_register(array('Kohana', 'auto_load'));
 
+/**
+ * Set if the application is in development (FALSE)
+ * or if the application is in production (TRUE).
+ */
+define('IN_PRODUCTION', TRUE);
+
 //-- Configuration and initialization -----------------------------------------
 
 /**
@@ -33,7 +39,16 @@ spl_autoload_register(array('Kohana', 'auto_load'));
  * - boolean  profile     enable or disable internal profiling               TRUE
  * - boolean  caching     enable or disable internal caching                 FALSE
  */
-Kohana::init(array('base_url' => '/ko3/', 'index_file' => ''));
+Kohana::init
+(
+	array
+	(
+		'base_url'   => '/ko3/',
+		'index_file' => FALSE,
+		'profile'    => ! IN_PRODUCTION,     // Disabling profiling if we are in production
+		'caching'    => IN_PRODUCTION,       // Enable caching if we are in production
+	)
+);
 
 /**
  * Attach the file write to logging. Multiple writers are supported.
@@ -77,7 +92,43 @@ Route::set('default', '(<controller>(/<action>(/<id>)))')
  * Execute the main request. A source of the URI can be passed, eg: $_SERVER['PATH_INFO'].
  * If no source is specified, the URI will be automatically detected.
  */
-echo Request::instance()
-	->execute()
-	->send_headers()
-	->response;
+
+$request = Request::instance();
+
+if (IN_PRODUCTION === TRUE)
+{
+	// If we're in production, we want to handle erros nicely
+	try
+	{
+		// Attempt to execute the response
+		$request->execute()
+			->send_headers();
+	}
+	catch (Exception $e)
+	{		
+		// If there was an internal server error, we should record it for analysis
+		if ($request->status == 500)
+		{
+			Kohana::$log->add('500', $e);
+		}		
+		
+		// Create a 404 response
+		$request->status = 404;
+		$request->response = View::factory('template')
+			->set('title', 'Kohana Examples - 404 - Page Not Found')
+			->set('meta_keywords', '')
+			->set('meta_description', '')
+			->set('stylesheets', html::style('media/css/404.css', array('media' => 'screen')))
+			->set('javascripts', '')
+			->set('content', View::factory('pages/errors/404'));
+	}
+}
+else
+{
+	// Split it out, and display errors
+	$request->execute()
+		->send_headers();
+}
+
+// Echo the response
+echo $request->response;
