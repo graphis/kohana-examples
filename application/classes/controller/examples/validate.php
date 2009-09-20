@@ -24,7 +24,7 @@ class Controller_Examples_Validate extends Controller_Application {
 		// Load our page sepcific stylesheets
 		$this->template->stylesheets .= html::style('media/css/examples/validate.css', array('media' => 'screen'));
 		
-		// Load our page sepcific javascripts
+		// Load our page specific javascripts
 		$this->template->javascripts .= html::script('media/js/jquery/jquery.form.js').
 									    html::script('media/js/examples/validate.js');
 		
