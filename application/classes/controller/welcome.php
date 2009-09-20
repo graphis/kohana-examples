@@ -1,6 +1,6 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 /**
- * Welcome page
+ * Welcome page.
  * 
  * @package    Kohana Examples
  * @link       http://azampagl.com/ko3
@@ -28,4 +28,4 @@ class Controller_Welcome extends Controller_Application {
 		$this->template->content = View::factory('pages/welcome');
 	}
 
-} // End Welcome
+} // End Welcome Controller

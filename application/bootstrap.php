@@ -73,20 +73,29 @@ Kohana::modules(array(
 	'userguide'  => MODPATH.'userguide',  // User guide and API documentation
 	));
 
-Route::set('examples', 'examples(/<controller>(/<action>(/<id>)))')
-	->defaults(array(
-		'directory' => 'examples',
-	));
-
-/**
- * Set the routes. Each route must have a minimum of a name, a URI and a set of
- * defaults for the URI.
- */
-Route::set('default', '(<controller>(/<action>(/<id>)))')
-	->defaults(array(
-		'controller' => 'welcome',
-		'action'     => 'index',
-	));
+if ( ! Route::cache())
+{
+	/**
+	 * Route for our examples
+	 */
+	Route::set('examples', 'examples(/<controller>(/<action>(/<id>)))')
+		->defaults(array(
+			'directory' => 'examples',
+		));
+		
+	/**
+	 * Set the routes. Each route must have a minimum of a name, a URI and a set of
+	 * defaults for the URI.
+	 */
+	Route::set('default', '(<controller>(/<action>(/<id>)))')
+		->defaults(array(
+			'controller' => 'welcome',
+			'action'     => 'index',
+		));
+	
+	// Cache the routes if in production
+	Route::cache(IN_PRODUCTION);
+}
 
 /**
  * Execute the main request. A source of the URI can be passed, eg: $_SERVER['PATH_INFO'].
@@ -105,27 +114,37 @@ if (IN_PRODUCTION === TRUE)
 			->send_headers();
 	}
 	catch (Exception $e)
-	{		
-		// If there was an internal server error, we should record it for analysis
-		if ($request->status == 500)
+	{
+		// Was the page found?
+		if ($request->status == 404 OR $e instanceof Kohana_Request_Exception)
 		{
+			$title = 'Kohana Examples - Page Not Found';
+			$view = View::factory('pages/errors/404');
+		}		
+		// The error was an internal server error or something else, we should record it for analysis
+		else
+		{
+			$title = 'Kohana Examples - Page Error';
+			$view = View::factory('pages/errors/500');
+			
+			// Write a log as an internal server error
 			Kohana::$log->add('500', $e);
+			
+			// Email administrators, if necessary
 		}		
 		
-		// Create a 404 response
-		$request->status = 404;
 		$request->response = View::factory('template')
-			->set('title', 'Kohana Examples - 404 - Page Not Found')
+			->set('title', $title)
 			->set('meta_keywords', '')
 			->set('meta_description', '')
-			->set('stylesheets', html::style('media/css/404.css', array('media' => 'screen')))
+			->set('stylesheets', html::style('media/css/errors.css', array('media' => 'screen')))
 			->set('javascripts', '')
-			->set('content', View::factory('pages/errors/404'));
+			->set('content', $view);
 	}
 }
 else
 {
-	// Split it out, and display errors
+	// We want to display errors if we are not in production
 	$request->execute()
 		->send_headers();
 }
