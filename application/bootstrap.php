@@ -85,13 +85,21 @@ if ( ! Route::cache())
 		
 	/**
 	 * Set the routes. Each route must have a minimum of a name, a URI and a set of
-	 * defaults for the URI.  all params should accept any set of characters, so that they system properly
-	 * handles 404 errors.
+	 * defaults for the URI.  'id' should be able to handle any characters passed to it.
 	 */
-	Route::set('default', '(<controller>(/<action>(/<id>)))', array('controller' => '.+', 'action' => '.+', 'id' => '.+'))
+	Route::set('default', '(<controller>(/<action>(/<id>)))', array('id' => '.+'))
 		->defaults(array(
 			'controller' => 'welcome',
 			'action'     => 'index',
+		));
+		
+	/**
+	 * Catch-all for pages that do not exist.
+	 */
+	Route::set('catch_all', '<path>', array('path' => '.+'))
+		->defaults(array(
+			'controller' => 'errors',
+			'action'     => '404',
 		));
 	
 	// Cache the routes if in production
