@@ -85,9 +85,10 @@ if ( ! Route::cache())
 		
 	/**
 	 * Set the routes. Each route must have a minimum of a name, a URI and a set of
-	 * defaults for the URI.
+	 * defaults for the URI.  all params should accept any set of characters, so that they system properly
+	 * handles 404 errors.
 	 */
-	Route::set('default', '(<controller>(/<action>(/<id>)))')
+	Route::set('default', '(<controller>(/<action>(/<id>)))', array('controller' => '.+', 'action' => '.+', 'id' => '.+'))
 		->defaults(array(
 			'controller' => 'welcome',
 			'action'     => 'index',
