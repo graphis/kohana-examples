@@ -22,7 +22,12 @@ spl_autoload_register(array('Kohana', 'auto_load'));
  * Set if the application is in development (FALSE)
  * or if the application is in production (TRUE).
  */
-define('IN_PRODUCTION', TRUE);
+define('IN_PRODUCTION', FALSE);
+
+/**
+ * Display errors only when in development.
+ */
+ini_set('display_errors', ! IN_PRODUCTION); 
 
 //-- Configuration and initialization -----------------------------------------
 
@@ -64,12 +69,8 @@ Kohana::$config->attach(new Kohana_Config_File);
  * Enable modules. Modules are referenced by a relative or absolute path.
  */
 Kohana::modules(array(
-	'auth'       => MODPATH.'auth',       // Basic authentication
-	'codebench'  => MODPATH.'codebench',  // Benchmarking tool
 	'database'   => MODPATH.'database',   // Database access
-	'image'      => MODPATH.'image',      // Image manipulation
-	'orm'        => MODPATH.'orm',        // Object Relationship Mapping
-	'pagination' => MODPATH.'pagination', // Paging of results
+	'template'   => MODPATH.'database',   // Templating
 	'userguide'  => MODPATH.'userguide',  // User guide and API documentation
 	));
 
@@ -137,12 +138,10 @@ if (IN_PRODUCTION === TRUE)
 			$view = View::factory('pages/errors/500');
 			
 			// Write a log as an internal server error
-			Kohana::$log->add('500', $e);
-			
-			// Email administrators, if necessary
+			Kohana::$log->add(Kohana::ERROR, Kohana::exception_text($e));
 		}		
 		
-		$request->response = View::factory('template')
+		$request->response = TView::factory('template')
 			->set('title', $title)
 			->set('meta_keywords', '')
 			->set('meta_description', '')
