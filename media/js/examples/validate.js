@@ -26,13 +26,22 @@ $(document).ready(function() {
  * @param	{Object}	jqForm
  * @param	{Object}	options
  */ 
-function request(formData, jqForm, options) { 
+function request(formData, jqForm, options) {
+	// Remove all error css from the fields
+	jQuery.each($('input[type=text], input[type=password]'), function() {
+		$(this).removeClass('error');
+	});
+	// Hide all of the error details
+	jQuery.each($('.detail'), function() {
+		$(this).hide();
+	});
+	
 	// Show the loading display
-	$('#loading').show();
- 
-    // here we could return false to prevent the form from being submitted; 
-    // returning anything other than false will allow the form submit to continue 
-    return true; 
+	$('#loading').show();	
+	
+	// here we could return false to prevent the form from being submitted; 
+	// returning anything other than false will allow the form submit to continue 
+	return true; 
 } 
 
 /**
@@ -46,16 +55,7 @@ function response(response, status)  {
 	$('#loading').hide();
 	
 	// Successful request?
-	if (status == "success") {		
-		// Remove all error css from the fields
-		jQuery.each($('input[type=text], input[type=password]'), function() {
-			$(this).removeClass('error');
-		});
-		// Hide all of the error details
-		jQuery.each($('.detail'), function() {
-			$(this).hide();
-		});
-			
+	if (status == "success") {			
 		if (response.success) {
 			alert('Successful Validation!');
 		}
