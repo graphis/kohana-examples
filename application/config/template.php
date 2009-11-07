@@ -6,7 +6,7 @@ return array
 	
 	'default'	=> array(
 		'view_dir'	=> 'default/',          // Location for template views @ application/views/[view_dir]
-		'view_file'	=> 'template',          // Location of template file@ application/views/[view_dir]/[view_file].EXT
-		'media_dir'	=> 'media/default/',    // Direcot
+		'view_file'	=> 'template',          // Location of template file @ application/views/[view_dir]/[view_file].EXT
+		'media_dir'	=> 'media/default/',    // Directory storing all of the media files (js, css, img)
 	),
 );

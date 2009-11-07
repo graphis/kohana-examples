@@ -2,11 +2,11 @@
 
 return array
 (
-	'active'	=> 'default',               // Active template
+	'active'	=> '',               // Active template
 	
 	'default'	=> array(
-		'view_dir'	=> 'default/',          // Location for template views @ application/views/[view_dir]
-		'view_file'	=> 'template',          // Location of template file@ application/views/[view_dir]/[view_file].EXT
-		'media_dir'	=> 'media/default/',    // Direcot
+		'view_dir'	=> '',          // Location for template views @ application/views/[view_dir]
+		'view_file'	=> '',          // Location of template file @ application/views/[view_dir]/[view_file].EXT
+		'media_dir'	=> '',          // Directory storing all of the media files (js, css, img)
 	),
 );
