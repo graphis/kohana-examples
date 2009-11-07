@@ -38,7 +38,7 @@
 		<div id="header">
 			<div class="links">
 				<a href="<?php echo url::site(Route::get('default')->uri())?>">Home</a> | 
-				<a href="<?php echo url::site(Route::get('default')->uri())?>">User Guide</a> |
+				<a href="<?php echo url::site(Route::get('docs/guide')->uri())?>">User Guide</a> |
 				<a href="http://github.com/azampagl/kohana-examples" target="_blank">The Code</a> |
 				<a href="http://kohanaphp.com" target="_blank">Kohana PHP</a>
 			</div>
