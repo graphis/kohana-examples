@@ -22,14 +22,14 @@ class Controller_Examples_Validate extends Controller_Application {
 		$this->template->meta_description .= ' - Validate';
 		
 		// Load our page sepcific stylesheets
-		$this->template->stylesheets .= html::style('media/css/examples/validate.css', array('media' => 'screen'));
+		$this->template->stylesheets .= thtml::style('css/examples/validate.css', array('media' => 'screen'));
 		
 		// Load our page specific javascripts
-		$this->template->javascripts .= html::script('media/js/jquery/jquery.form.js').
-									    html::script('media/js/examples/validate.js');
+		$this->template->javascripts .= thtml::script('js/jquery/jquery.form.js').
+									    thtml::script('js/examples/validate.js');
 		
 		// Load our view and bind our variables
-		$this->template->content = View::factory('pages/examples/validate')
+		$this->template->content = TView::factory('examples/validate')
 			->bind('auth_token', $auth_token);
 			
 		// Generate an auth token to *aid* against CSRF

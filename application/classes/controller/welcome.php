@@ -22,10 +22,10 @@ class Controller_Welcome extends Controller_Application {
 		$this->template->meta_description .= ' - Home';
 		
 		// Load our page sepcific stylesheets
-		$this->template->stylesheets .= html::style('media/css/welcome.css', array('media' => 'screen'));
+		$this->template->stylesheets .= thtml::style('css/welcome.css', array('media' => 'screen'));
 		
-		// Load our view
-		$this->template->content = View::factory('pages/welcome');
+		// Load our template view
+		$this->template->content = TView::factory('welcome');
 	}
 
 } // End Welcome Controller

@@ -48,8 +48,8 @@ input[type="password"]       { height: 24px;min-width: 200px; }
 input[type="radio"],
 input[type="checkbox"]       { margin: 0; padding: 0; min-width: 20px; width: 20px; border: none; }
 
-input[type="submit"]         { background: url('/ko3/media/img/buttons/submit.png') no-repeat; border: none; cursor: pointer; font-size: 0px; margin: 0; padding: 0; height: 33px; width: 121px; }
-input[type="submit"]:hover   { background: url('/ko3/media/img/buttons/submit.png') 0px -33px no-repeat; border: none; cursor: pointer; font-size: 0px; margin: 0; padding: 0; height: 33px; width: 121px; }
+input[type="submit"]         { background: url('../img/buttons/submit.png') no-repeat; border: none; cursor: pointer; font-size: 0px; margin: 0; padding: 0; height: 33px; width: 121px; }
+input[type="submit"]:hover   { background: url('../img/buttons/submit.png') 0px -33px no-repeat; border: none; cursor: pointer; font-size: 0px; margin: 0; padding: 0; height: 33px; width: 121px; }
 
 
 input:focus                  { border: 1px solid #8e8e8e; }
@@ -101,6 +101,6 @@ div.clear { content: ""; display: block; height: 0; clear: both; visibility: hid
 #content-header                   { margin: 0 auto; height: 50px; padding-top: 15px; width: 960px; }
 #content-header .title            { float: left; text-align: left; width: 944px; }
 #content-header .loading          { float: left; text-align: right; width: 16px; }
-#content-header .loading #loading { background: url('/ko3/media/img/ajax-loader.gif') 0px 8px no-repeat; display: none; height: 24px; width: 16px; }
+#content-header .loading #loading { background: url('../img/ajax-loader.gif') 0px 8px no-repeat; display: none; height: 24px; width: 16px; }
 
 #content { margin: 0 auto; width: 960px; }

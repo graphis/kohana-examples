@@ -22,7 +22,7 @@ spl_autoload_register(array('Kohana', 'auto_load'));
  * Set if the application is in development (FALSE)
  * or if the application is in production (TRUE).
  */
-define('IN_PRODUCTION', FALSE);
+define('IN_PRODUCTION', TRUE);
 
 /**
  * Display errors only when in development.
@@ -70,8 +70,8 @@ Kohana::$config->attach(new Kohana_Config_File);
  */
 Kohana::modules(array(
 	'database'   => MODPATH.'database',   // Database access
-	'template'   => MODPATH.'database',   // Templating
-	'userguide'  => MODPATH.'userguide',  // User guide and API documentation
+	'template'   => MODPATH.'template',   // Templating
+	//'userguide'  => MODPATH.'userguide',  // User guide and API documentation
 	));
 
 if ( ! Route::cache())
@@ -129,13 +129,13 @@ if (IN_PRODUCTION === TRUE)
 		if ($request->status == 404 OR $e instanceof Kohana_Request_Exception)
 		{
 			$title = 'Kohana Examples - Page Not Found';
-			$view = View::factory('pages/errors/404');
+			$view = TView::factory('errors/404');
 		}		
 		// The error was an internal server error or something else, we should record it for analysis
 		else
 		{
 			$title = 'Kohana Examples - Page Error';
-			$view = View::factory('pages/errors/500');
+			$view = TView::factory('errors/500');
 			
 			// Write a log as an internal server error
 			Kohana::$log->add(Kohana::ERROR, Kohana::exception_text($e));
@@ -145,7 +145,7 @@ if (IN_PRODUCTION === TRUE)
 			->set('title', $title)
 			->set('meta_keywords', '')
 			->set('meta_description', '')
-			->set('stylesheets', html::style('media/css/errors.css', array('media' => 'screen')))
+			->set('stylesheets', thtml::style('css/errors.css', array('media' => 'screen')))
 			->set('javascripts', '')
 			->set('content', $view);
 	}
