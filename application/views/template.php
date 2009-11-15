@@ -10,16 +10,16 @@
 		
 		<?php echo
 		html::style('media/css/screen.css', array('media' => 'screen')) ?>
-		<?php echo $stylesheets ?>	
+		<?php foreach ($styles as $file => $type) echo html::style($file, array('media' => $type)), "\n" ?>
 	 
 		<script type="text/javascript">
 			// Set page globals
-			var BASE_URL = '<?php echo url::site() ?>';
+			BASE_URL = '<?php echo url::site() ?>';
 		</script>
 		
 		<?php echo
 		html::script('http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js') ?>
-		<?php echo $javascripts ?>
+		<?php foreach ($scripts as $file) echo html::script($file), "\n" ?>
 		
 		<script type="text/javascript">
 		var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");

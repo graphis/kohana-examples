@@ -20,10 +20,10 @@ class Controller_Errors extends Controller_Application {
 		$this->template->meta_keywords .= '';
 		$this->template->meta_description .= '';
 		
-		// Load our page sepcific stylesheets
-		$this->template->stylesheets .= html::style('css/errors.css', array('media' => 'screen'));
+		// Load stylesheets
+		$this->template->styles += array('media/css/errors.css' => 'screen');
 		
-		// Load our view
+		// Load view
 		$this->template->content = View::factory('errors/404');
 	}
 

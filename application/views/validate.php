@@ -1,6 +1,6 @@
 <div class="w-600">
 	
-	<?php echo form::open('examples/validate/submit', array('id' => 'frm_validate', 'method' => 'post', 'onsubmit' => 'return false;')) ?>
+	<?php echo form::open('validate/submit', array('id' => 'frm_validate', 'method' => 'post', 'onsubmit' => 'return false;')) ?>
 	
 	<div>
 		<div class="label">

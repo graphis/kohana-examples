@@ -21,20 +21,19 @@ class Controller_Examples_Validate extends Controller_Application {
 		$this->template->meta_keywords .= ', kohana examples validate';
 		$this->template->meta_description .= ' - Validate';
 		
-		// Load our page sepcific stylesheets
-		$this->template->stylesheets .= html::style('media/css/validate.css', array('media' => 'screen'));
+		// Load stylesheets
+		$this->template->styles += array('media/css/validate.css' => 'screen');
 		
-		// Load our page specific javascripts
-		$this->template->javascripts .= html::script('media/js/jquery/jquery.form.js').
-									    html::script('media/js/validate.js');
+		// Load javascripts
+		$this->template->scripts += array('media/js/jquery/jquery.form.js', 'media/js/validate.js');
 		
-		// Load our view and bind our variables
+		// Load view and bind variables
 		$this->template->content = View::factory('validate')
 			->bind('auth_token', $auth_token);
 			
-		// Generate an auth token to *aid* against CSRF
-		$auth_token = text::random('alnum', 32);
-		$this->_session->set('auth_token', $auth_token);
+		// Generate a page token to *aid* against CSRF
+		$page_token = text::random('alnum', 32);
+		$this->_session->set('page_token', $page_token);
 	}
 	
 	/**

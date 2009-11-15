@@ -21,10 +21,10 @@ class Controller_Welcome extends Controller_Application {
 		$this->template->meta_keywords .= ', kohana examples home';
 		$this->template->meta_description .= ' - Home';
 		
-		// Load our page sepcific stylesheets
-		$this->template->stylesheets .= html::style('media/css/welcome.css', array('media' => 'screen'));
+		// Load stylesheets
+		$this->template->styles += array('media/css/welcome.css' => 'screen');
 		
-		// Load our template view
+		// Load view
 		$this->template->content = View::factory('welcome');
 	}
 

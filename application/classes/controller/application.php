@@ -70,8 +70,9 @@ abstract class Controller_Application extends Controller_Template {
 			$this->template->meta_keywords = 'kohana examples';
 			$this->template->meta_description = 'Kohana 3.0 Examples';
 				
-			$this->template->stylesheets =
-			$this->template->javascripts = '';
+			$this->template->styles =
+			$this->template->scripts = array();
+			
 			$this->template->content     = '';
 		}
 	}
