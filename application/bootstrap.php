@@ -78,7 +78,6 @@ Kohana::$config->attach(new Kohana_Config_File);
  */
 Kohana::modules(array(
 	'database'   => MODPATH.'database',   // Database access
-	'userguide'  => MODPATH.'userguide',  // User guide and API documentation
 	));
 
 if ( ! Route::cache())
