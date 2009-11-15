@@ -19,6 +19,14 @@ date_default_timezone_set('UTC');
 spl_autoload_register(array('Kohana', 'auto_load'));
 
 /**
+ * Enable the Kohana auto-loader for unserialization.
+ *
+ * @see  http://php.net/spl_autoload_call
+ * @see  http://php.net/manual/var.configuration.php#unserialize-callback-func
+ */
+ini_set('unserialize_callback_func', 'spl_autoload_call');
+
+/**
  * Set if the application is in development (FALSE)
  * or if the application is in production (TRUE).
  */
@@ -48,7 +56,7 @@ Kohana::init
 (
 	array
 	(
-		'base_url'   => '/ko3/',
+		'base_url'   => '/ko3/examples/',
 		'index_file' => FALSE,
 		'profile'    => ! IN_PRODUCTION,     // Disabling profiling if we are in production
 		'caching'    => IN_PRODUCTION,       // Enable caching if we are in production
@@ -70,20 +78,11 @@ Kohana::$config->attach(new Kohana_Config_File);
  */
 Kohana::modules(array(
 	'database'   => MODPATH.'database',   // Database access
-	'template'   => MODPATH.'template',   // Templating
 	'userguide'  => MODPATH.'userguide',  // User guide and API documentation
 	));
 
 if ( ! Route::cache())
-{
-	/**
-	 * Route for our examples
-	 */
-	Route::set('examples', 'examples(/<controller>(/<action>(/<id>)))')
-		->defaults(array(
-			'directory' => 'examples',
-		));
-		
+{		
 	/**
 	 * Set the routes. Each route must have a minimum of a name, a URI and a set of
 	 * defaults for the URI.  'id' should be able to handle any characters passed to it.
@@ -129,23 +128,23 @@ if (IN_PRODUCTION === TRUE)
 		if ($request->status == 404 OR $e instanceof Kohana_Request_Exception)
 		{
 			$title = 'Kohana Examples - Page Not Found';
-			$view = TView::factory('errors/404');
+			$view = View::factory('errors/404');
 		}		
 		// The error was an internal server error or something else, we should record it for analysis
 		else
 		{
 			$title = 'Kohana Examples - Page Error';
-			$view = TView::factory('errors/500');
+			$view = View::factory('errors/500');
 			
 			// Write a log as an internal server error
 			Kohana::$log->add(Kohana::ERROR, Kohana::exception_text($e));
 		}		
 		
-		$request->response = TView::factory('template')
+		$request->response = View::factory('template')
 			->set('title', $title)
 			->set('meta_keywords', '')
 			->set('meta_description', '')
-			->set('stylesheets', thtml::style('css/errors.css', array('media' => 'screen')))
+			->set('stylesheets', html::style('css/errors.css', array('media' => 'screen')))
 			->set('javascripts', '')
 			->set('content', $view);
 	}

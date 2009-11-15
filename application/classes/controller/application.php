@@ -7,9 +7,12 @@
  * @link       http://kohanaphp.com/
  */
 abstract class Controller_Application extends Controller_Template {
-
+	
 	// Default session instance
 	protected $_session;
+	
+	// Is the request ajax?
+	protected $_is_ajax;
 	
 	/**
 	 * Pass the request to the true template controller,
@@ -22,41 +25,55 @@ abstract class Controller_Application extends Controller_Template {
 	{
 		// Pass the request to the template controller
 		parent::__construct($req);
-				
-		// Load the configuration
-		$config = Kohana::config('template');
-		$template = $config->active;
 		
-		if ( ! isset($config->{$template}) OR ! isset($config->{$template}['view_dir']) OR ! isset($config->{$template}['view_file']))
-		{
-			throw new Kohana_Exception('Template variables were never defined');
-		}
-		
-		// Reset the template
-		$this->template = $config->{$template}['view_dir'].$config->{$template}['view_file'];
+		// Set the template
+		$this->template = 'template';
 		
 		// Set the default session instance, this will be used throughout the application
 		$this->_session = Session::instance();
+		
+		// Is the request ajax?
+		if (Request::$is_ajax OR $this->request !== Request::instance())
+		{
+			$this->_is_ajax = TRUE;
+		}
 	}
 	
 	/**
-	 * Initialize template variables such as title and keywords.
+	 * Determine whether the request is ajax or not.  If it is, send the
+	 * proper headers and turn off aut-rendering.
 	 * 
-	 * @return 
+	 * Initialize template variables such as title and keywords
+	 * if it is a normal request.
+	 * 
+	 * @return	void
 	 */
 	public function before()
-	{
-		// Call template controller before() to initialize template
-		parent::before();
+	{		
+		if ($this->_is_ajax === TRUE)
+		{
+			// Turn off auto-rendering
+    		$this->auto_render = FALSE;
 		
-		// Initialize template variables
-		$this->template->title = 'Kohana Examples';
-		$this->template->meta_keywords = 'kohana examples';
-		$this->template->meta_description = 'Kohana 3.0 Examples';
-		
-		$this->template->stylesheets =
-		$this->template->javascripts = '';
-		$this->template->content     = '';
+			// Send headers for a json response
+			$this->request->headers['Cache-Control'] = 'no-cache, must-revalidate';
+			$this->request->headers['Expires'] = 'Sun, 30 Jul 1989 19:30:00 GMT';
+			$this->request->headers['Content-Type'] = 'application/json';
+		}
+		else
+		{
+			// Call template controller before() to initialize template
+			parent::before();
+			
+			// Initialize template variables
+			$this->template->title = 'Kohana Examples';
+			$this->template->meta_keywords = 'kohana examples';
+			$this->template->meta_description = 'Kohana 3.0 Examples';
+				
+			$this->template->stylesheets =
+			$this->template->javascripts = '';
+			$this->template->content     = '';
+		}
 	}
 
 } // End Application Controller

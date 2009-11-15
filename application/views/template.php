@@ -9,7 +9,7 @@
 		<meta name="description" content="<?php echo $meta_description ?>" />
 		
 		<?php echo
-		html::style('media/default/css/screen.css', array('media' => 'screen')) ?>
+		html::style('media/css/screen.css', array('media' => 'screen')) ?>
 		<?php echo $stylesheets ?>	
 	 
 		<script type="text/javascript">

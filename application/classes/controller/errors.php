@@ -21,7 +21,7 @@ class Controller_Errors extends Controller_Application {
 		$this->template->meta_description .= '';
 		
 		// Load our page sepcific stylesheets
-		$this->template->stylesheets .= thtml::style('css/errors.css', array('media' => 'screen'));
+		$this->template->stylesheets .= html::style('css/errors.css', array('media' => 'screen'));
 		
 		// Load our view
 		$this->template->content = View::factory('errors/404');

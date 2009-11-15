@@ -22,14 +22,14 @@ class Controller_Examples_Validate extends Controller_Application {
 		$this->template->meta_description .= ' - Validate';
 		
 		// Load our page sepcific stylesheets
-		$this->template->stylesheets .= thtml::style('css/examples/validate.css', array('media' => 'screen'));
+		$this->template->stylesheets .= html::style('media/css/validate.css', array('media' => 'screen'));
 		
 		// Load our page specific javascripts
-		$this->template->javascripts .= thtml::script('js/jquery/jquery.form.js').
-									    thtml::script('js/examples/validate.js');
+		$this->template->javascripts .= html::script('media/js/jquery/jquery.form.js').
+									    html::script('media/js/validate.js');
 		
 		// Load our view and bind our variables
-		$this->template->content = TView::factory('examples/validate')
+		$this->template->content = View::factory('validate')
 			->bind('auth_token', $auth_token);
 			
 		// Generate an auth token to *aid* against CSRF
@@ -45,11 +45,8 @@ class Controller_Examples_Validate extends Controller_Application {
 	 */
 	public function action_submit()
 	{
-		if (Request::$is_ajax)
-		{
-			// Turn off auto render
-    		$this->auto_render = FALSE;
-			
+		if ($this->_is_ajax === TRUE)
+		{			
 			// Keep track of the status and any errors that occur
 			$success = TRUE;
 			$errors = array();
@@ -149,14 +146,14 @@ class Controller_Examples_Validate extends Controller_Application {
 			}
 			
 			// Where are the message translations located?  In our case... /application/messages/examples/validate.php
-			$message_file = 'examples/validate';
+			$message_file = 'validate';
 			
 			// Check if the auth token is valid, skip everything else if it isn't
-			if (arr::get($_POST, 'auth_token') != $this->_session->get('auth_token'))
+			if (arr::get($_POST, 'page_token') != $this->_session->get('page_token'))
 			{
 				$success = FALSE;
 				$message =  Kohana::message($message_file);
-				$errors['auth_token'] = $message['auth_token'];
+				$errors['page_token'] = $message['page_token'];
 			}
 			// If the auth token wasn't valid, don't process anything
 			if ($success === TRUE AND ! $data->check())
@@ -170,12 +167,7 @@ class Controller_Examples_Validate extends Controller_Application {
 				// Handle Sanitation
 			
 				// Handle Database Submission :: *should be handled in a Model*
-			}			
-			
-			// Send headers for a json response
-			$this->request->headers['Cache-Control'] = 'no-cache, must-revalidate';
-			$this->request->headers['Expires'] = 'Sun, 30 Jul 1989 19:30:00 GMT';
-			$this->request->headers['Content-Type'] = 'application/json';			
+			}	
 			
 			// Call our json view and set our variables
 			$this->request->response = View::factory('json')
