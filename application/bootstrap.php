@@ -30,7 +30,7 @@ ini_set('unserialize_callback_func', 'spl_autoload_call');
  * Set if the application is in development (FALSE)
  * or if the application is in production (TRUE).
  */
-define('IN_PRODUCTION', FALSE);
+define('IN_PRODUCTION', TRUE);
 
 /**
  * Display errors only when in development.
@@ -143,8 +143,8 @@ if (IN_PRODUCTION === TRUE)
 			->set('title', $title)
 			->set('meta_keywords', '')
 			->set('meta_description', '')
-			->set('stylesheets', html::style('css/errors.css', array('media' => 'screen')))
-			->set('javascripts', '')
+			->set('styles', array('media/css/errors.css' => 'screen'))
+			->set('scripts', array())
 			->set('content', $view);
 	}
 }
