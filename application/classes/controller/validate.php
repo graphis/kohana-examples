@@ -6,7 +6,7 @@
  * @link       http://azampagl.com/ko3
  * @link       http://kohanaphp.com/
  */
-class Controller_Examples_Validate extends Controller_Application {
+class Controller_Validate extends Controller_Application {
 
 	/**
 	 * Main action for our validate example.  It will load
@@ -29,7 +29,7 @@ class Controller_Examples_Validate extends Controller_Application {
 		
 		// Load view and bind variables
 		$this->template->content = View::factory('validate')
-			->bind('auth_token', $auth_token);
+			->bind('page_token', $page_token);
 			
 		// Generate a page token to *aid* against CSRF
 		$page_token = text::random('alnum', 32);
@@ -80,7 +80,6 @@ class Controller_Examples_Validate extends Controller_Application {
 				(
 					'not_empty'			=> NULL,              // Make sure it's not empty
 					'email'				=> array(TRUE),       // Valid email?  Pass TRUE for strict email verification
-					'email_domain'		=> NULL,              // Check to see if the domain has a valid MX record
 				),
 				'first_name'		=> array                  /// Rules for first name
 				(                
@@ -147,7 +146,7 @@ class Controller_Examples_Validate extends Controller_Application {
 			// Where are the message translations located?  In our case... /application/messages/examples/validate.php
 			$message_file = 'validate';
 			
-			// Check if the auth token is valid, skip everything else if it isn't
+			// Check if the page token is valid, skip everything else if it isn't
 			if (arr::get($_POST, 'page_token') != $this->_session->get('page_token'))
 			{
 				$success = FALSE;

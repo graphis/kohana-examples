@@ -103,7 +103,7 @@
 	</div>
 	
 	<div class="p-t-25">
-		<?php echo form::hidden('auth_token', $auth_token, array('id' => 'auth_token')) ?>
+		<?php echo form::hidden('page_token', $page_token, array('id' => 'page_token')) ?>
 		<?php echo form::submit('submit', '', array('id' => 'submit')) ?>
 	</div>
 			

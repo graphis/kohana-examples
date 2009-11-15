@@ -73,7 +73,7 @@ abstract class Controller_Application extends Controller_Template {
 			$this->template->styles =
 			$this->template->scripts = array();
 			
-			$this->template->content     = '';
+			$this->template->content = '';
 		}
 	}
 

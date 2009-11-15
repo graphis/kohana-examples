@@ -30,7 +30,7 @@ ini_set('unserialize_callback_func', 'spl_autoload_call');
  * Set if the application is in development (FALSE)
  * or if the application is in production (TRUE).
  */
-define('IN_PRODUCTION', TRUE);
+define('IN_PRODUCTION', FALSE);
 
 /**
  * Display errors only when in development.
